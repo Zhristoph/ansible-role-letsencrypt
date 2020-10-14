@@ -1,8 +1,5 @@
 ---
 - name: Install letsencrypt client
-  tags: github
-  git:
-    repo: 'https://github.com/letsencrypt/letsencrypt'
-    dest: /root/letsencrypt
-  when: ansible_all_ipv4_addresses != []
-
+  tags: letsencrypt
+  apt:
+    name: "certbot"

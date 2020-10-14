@@ -14,12 +14,12 @@ init() {
 
 runLetsEncrypt() {
     if [ ! -f /etc/letsencrypt/live/{{ fqdn }}/fullchain.pem ]; then
-        /root/letsencrypt/letsencrypt-auto certonly ${letsEncryptOpts} ${letsEncryptDomains}
+        /usr/bin/certbot certonly ${letsEncryptOpts} ${letsEncryptDomains}
     fi
     if [ ! -z "${letsEncryptMoreCerts}" ]; then
         for domain in ${letsEncryptMoreCerts}; do
             if [ ! -f /etc/letsencrypt/live/${domain}/fullchain.pem ]; then
-                /root/letsencrypt/letsencrypt-auto certonly ${letsEncryptOpts} -d ${domain}
+                /usr/bin/certbot certonly ${letsEncryptOpts} -d ${domain}
             fi
         done
     fi

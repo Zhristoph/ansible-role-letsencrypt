@@ -25,11 +25,11 @@ createOCSP(){
 
 renewLetsEncrypt(){
     if /bin/systemctl status apache2 > /dev/urandom 2>&1; then
-        /root/letsencrypt/letsencrypt-auto renew -q -n --no-self-upgrade --standalone --renew-hook /root/bin/letsencrypt-renew-hook.sh --pre-hook "/bin/systemctl stop apache2" --post-hook "/bin/systemctl start apache2" > /dev/urandom
+        /usr/bin/certbot renew -q -n --no-self-upgrade --standalone --renew-hook /root/bin/letsencrypt-renew-hook.sh --pre-hook "/bin/systemctl stop apache2" --post-hook "/bin/systemctl start apache2" > /dev/urandom
     elif /bin/systemctl status haproxy > /dev/urandom 2>&1; then
-        /root/letsencrypt/letsencrypt-auto renew -q -n --no-self-upgrade --standalone --renew-hook /root/bin/letsencrypt-renew-hook.sh --pre-hook "/bin/systemctl stop haproxy" --post-hook "/bin/systemctl start haproxy" > /dev/urandom
+        /usr/bin/certbot renew -q -n --no-self-upgrade --standalone --renew-hook /root/bin/letsencrypt-renew-hook.sh --pre-hook "/bin/systemctl stop haproxy" --post-hook "/bin/systemctl start haproxy" > /dev/urandom
     else
-        /root/letsencrypt/letsencrypt-auto renew -q -n --no-self-upgrade --standalone --renew-hook /root/bin/letsencrypt-renew-hook.sh > /dev/urandom
+        /usr/bin/certbot renew -q -n --no-self-upgrade --standalone --renew-hook /root/bin/letsencrypt-renew-hook.sh > /dev/urandom
     fi
 }
 
