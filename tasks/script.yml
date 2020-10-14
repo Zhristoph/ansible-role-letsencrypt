@@ -1,0 +1,32 @@
+---
+- name: Create /root/bin
+  file:
+    dest: /root/bin
+    owner: root
+    group: root
+    mode: 0700
+    state: directory
+
+- name: Deploy letsencrypt scripts
+  tags: letsencrypt
+  template:
+    src: "{{ item }}"
+    dest: "/root/bin/{{ item }}"
+    owner: root
+    group: root
+    mode: 0700
+  with_items:
+    - letsencrypt_cron.sh
+    - letsencrypt_init.sh
+    - letsencrypt-renew-hook.sh
+
+- name: Run letsencrypt init script
+  command: /root/bin/letsencrypt_init.sh
+  args:
+   creates: "/etc/letsencrypt/live/{{ fqdn }}/README"
+
+- name: Deploy letsencrypt cron job
+  cron:
+    name: "Renew letsencrypt cert"
+    special_time: "daily"
+    job: "/root/bin/letsencrypt_cron.sh"
