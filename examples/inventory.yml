@@ -1,0 +1,6 @@
+all:
+  hosts:
+  children:
+    httpproxy:
+      hosts:
+        httpproxy01:

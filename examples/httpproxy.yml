@@ -1,0 +1,9 @@
+- name: HTTPProxy
+  hosts: httpproxy
+  become: yes
+  gather_facts: no
+  roles:
+    - ffdhegroups
+    - letsencrypt
+    - haproxy
+
